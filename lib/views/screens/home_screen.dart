@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_car/dummy/data_dummy.dart';
+import 'package:shopping_car/views/screens/products_by_category_screen.dart';
 import 'package:shopping_car/views/widgets/category_card.dart';
 import 'package:shopping_car/views/widgets/product_card.dart';
 import 'package:shopping_car/views/widgets/section_title.dart';
@@ -21,14 +22,19 @@ class HomeScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: CarouselSlider(
               items: CategoryDummy.categories
-                  .map((e) => CategoryCard(
-                        category: e,
-                      ))
+                  .map((e) => InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, ProductsByCategoryScreen.routeName, arguments: e);
+                    },
+                    child: CategoryCard(
+                          category: e,
+                        ),
+                  ))
                   .toList(),
               options: CarouselOptions(
-                aspectRatio: 1.6,
-                viewportFraction: 0.9,
-                enlargeCenterPage: true,
+                aspectRatio: 2,
+                viewportFraction: 0.5,
+                enlargeCenterPage: false,
                 enlargeStrategy: CenterPageEnlargeStrategy.height,
               ),
             ),
