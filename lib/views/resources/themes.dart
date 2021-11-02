@@ -23,6 +23,8 @@ class Themes {
       textTheme: TextTheme(
         headline6: Styles.textHeadline6,
         headline5: Styles.textHeadline5,
+        headline4: Styles.textHeadline4,
+        headline3: Styles.textHeadline3,
         bodyText1: Styles.textBody1,
         bodyText2: Styles.textBody2,
         caption: Styles.textCaption

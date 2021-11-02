@@ -10,6 +10,12 @@ class Styles {
       color: const Color(0xffffffff),
       fontWeight: FontWeight.bold);
 
+  static TextStyle get textHeadline3 =>
+      TextStyle(fontSize: 26, color: Colorss.text);
+
+  static TextStyle get textHeadline4 =>
+      TextStyle(fontSize: 24, color: Colorss.text);
+
   static TextStyle get textHeadline5 =>
       TextStyle(fontSize: 22, color: Colorss.text);
 

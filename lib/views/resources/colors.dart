@@ -10,14 +10,10 @@ class Colorss {
   static const Color onError = Colors.white;
   static const Color onSuccess = Colors.white;
 
-  static const Color shadow = const Color(0x35000000);
+  static const Color shadow = const Color(0x95000000);
   static const Color control = Color(0xffc0c3c8);
   static const Color text = Color(0xBB000000);
   static const Color textLight = Color(0xFF616161);
-  static const Color facebook = Color(0xff3B5998);
-  static const Color google = Color(0xffdf4539);
-  static const Color email = Color(0xffffd600);
-  static const Color petMatch = Color(0xffdf4539);
   static const Color favorite = Color(0xffffd600);
 
   static ColorScheme get appColorSheme => ColorScheme.light(
