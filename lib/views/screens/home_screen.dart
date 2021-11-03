@@ -1,6 +1,7 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping_car/dummy/data_dummy.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_car/blocs/category/category_bloc.dart';
+import 'package:shopping_car/blocs/product/product_bloc.dart';
 import 'package:shopping_car/views/screens/cart_screen.dart';
 import 'package:shopping_car/views/screens/products_by_category_screen.dart';
 import 'package:shopping_car/views/widgets/category_card.dart';
@@ -16,51 +17,75 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Shopping Cart"),
+        title: Text("Tienda Digital"),
       ),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: CarouselSlider(
-              items: DataDummy.categories
-                  .map((e) => InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, ProductsByCategoryScreen.routeName, arguments: e);
-                    },
-                    child: CategoryCard(
-                          category: e,
-                        ),
-                  ))
-                  .toList(),
-              options: CarouselOptions(
-                aspectRatio: 2,
-                viewportFraction: 0.5,
-                enlargeCenterPage: false,
-                enlargeStrategy: CenterPageEnlargeStrategy.height,
-              ),
-            ),
-          ),
+          SliverToBoxAdapter(child: BlocBuilder<CategoryBloc, CategoryState>(
+            builder: (context, state) {
+              if (state is CategoryLoading) {
+                return CircularProgressIndicator();
+              } else if (state is CategoryLoaded) {
+                return _buildCategories(context, state);
+              } else {
+                return Container();
+              }
+            },
+          )),
           SliverToBoxAdapter(child: SectionTitle(title: "Todos los productos")),
-          SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return ProductCard(product: DataDummy.products[index]);
-              },
-              childCount: DataDummy.products.length,
-            ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 1.0),
+          BlocBuilder<ProductBloc, ProductState>(
+            builder: (context, state) {
+              if (state is ProductLoading) {
+                return SliverToBoxAdapter(child: Center(child: CircularProgressIndicator(),),);
+              } else if (state is ProductLoaded) {
+                return _buildProducts(context, state);
+              } else {
+                return Container();
+              }
+            },
           )
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        heroTag: "MyCart",
-        onPressed: () => {
-          Navigator.pushNamed(context, CartScreen.routeName)
-        }, 
-        label: Text("My Cart"),
+        heroTag: "MiCarrito",
+        onPressed: () => {Navigator.pushNamed(context, CartScreen.routeName)},
+        label: Text("Mi Carrito"),
         icon: Icon(Icons.shopping_cart_outlined),
-        backgroundColor: Theme.of(context).colorScheme.primary,),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+      ),
+    );
+  }
+
+  SliverGrid _buildProducts(BuildContext context, ProductLoaded state) {
+    return SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return ProductCard(product: state.products[index]);
+                  },
+                  childCount: state.products.length,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, childAspectRatio: 1.0),
+              );
+  }
+
+  Widget _buildCategories(BuildContext context, CategoryLoaded state) {
+    return Container(
+      height: 150.0,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: state.categories.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              child: CategoryCard(
+                category: state.categories[index],
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, ProductsByCategoryScreen.routeName,
+                    arguments: state.categories[index]);
+              },
+            );
+          }),
     );
   }
 }

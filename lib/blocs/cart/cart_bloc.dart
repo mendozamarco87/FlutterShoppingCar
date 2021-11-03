@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shopping_car/models/cart_model.dart';
@@ -16,7 +18,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartProductUpdateQuantity>(_onCartProductUpdateQuantity);
   }
 
-  void _onCartStarted(CartStarted event, Emitter<CartState> emit) async {
+  FutureOr<void> _onCartStarted(CartStarted event, Emitter<CartState> emit) async {
     emit(CartLoading());
     try {
       await Future<void>.delayed(Duration(seconds: 1));
@@ -24,7 +26,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     } catch (_) {}
   }
 
-  void _onCartProductAdded(
+  FutureOr<void> _onCartProductAdded(
       CartProductAdded event, Emitter<CartState> emit) async {
     if (state is CartLoaded) {
       final cart = (state as CartLoaded).cart;
@@ -41,7 +43,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  void _onCartProductRemoved(
+  FutureOr<void> _onCartProductRemoved(
       CartProductRemoved event, Emitter<CartState> emit) async {
     if (state is CartLoaded) {
       final cart = (state as CartLoaded).cart;
@@ -53,20 +55,20 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  void _onCartProductUpdateQuantity(CartProductUpdateQuantity event, Emitter<CartState> emit) {
+  FutureOr<void> _onCartProductUpdateQuantity(CartProductUpdateQuantity event, Emitter<CartState> emit) {
     if (state is CartLoaded) {
       final cart = (state as CartLoaded).cart;
       final index = cart.products.indexOf(event.cartProduct);
 
       if (index != -1) {
-        if (event.newQuantity < 1) {
-          _onCartProductRemoved(CartProductRemoved(event.cartProduct.product), emit);
-          return;
-        }
-        final cardProductUpdated = cart.products[index].copyWith(
+        if (event.newQuantity > 0) {
+          final cardProductUpdated = cart.products[index].copyWith(
             quantity: event.newQuantity);
 
-        emit(CartLoaded(cart: cart.copyWith(products: List.from(cart.products)..replaceRange(index, index+1, [cardProductUpdated]))));
+          emit(CartLoaded(cart: cart.copyWith(products: List.from(cart.products)..replaceRange(index, index+1, [cardProductUpdated]))));
+        } else {
+          add(CartProductRemoved(event.cartProduct.product));
+        }
       }
     }
   }

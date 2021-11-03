@@ -5,6 +5,7 @@ import 'package:shopping_car/blocs/cart/cart_bloc.dart';
 import 'package:shopping_car/models/product_model.dart';
 import 'package:shopping_car/views/resources/colors.dart';
 import 'package:shopping_car/views/widgets/wigets_utils.dart';
+import 'package:shopping_car/tools/extensions.dart';
 
 import 'ShimmerPlaceholderLoading.dart';
 
@@ -56,9 +57,10 @@ class ProductCard extends StatelessWidget {
                       product.name,
                       style: Theme.of(context).textTheme.headline5!.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary),
+                      maxLines: 2,
                     ),
                     Text(
-                      "\$${product.price.toStringAsFixed(2)}",
+                      product.price.toStringMoneyFormat(),
                       style: Theme.of(context).textTheme.headline6!.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary),
                     )
@@ -80,7 +82,8 @@ class ProductCard extends StatelessWidget {
                       ),
                       onPressed: () {
                         context.read<CartBloc>().add(CartProductAdded(product));
-                        WidgetUtils.showSnackbarSuccess(context, "Product added to your cart");
+                        WidgetUtils.showSnackbarSuccess(
+                            context, "Producto adicionado a tu carrito");
                       },
                     );
                   } else {

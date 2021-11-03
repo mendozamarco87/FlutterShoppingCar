@@ -3,13 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:shopping_car/blocs/cart/cart_bloc.dart';
 import 'package:shopping_car/models/cart_product_model.dart';
+import 'package:shopping_car/tools/extensions.dart';
 
 import 'ShimmerPlaceholderLoading.dart';
 
 class CartProductCard extends StatelessWidget {
   final CartProduct cartProduct;
+  final void Function(CartProduct cartProduct)? onQuantityIncrement;
+  final void Function(CartProduct cartProduct)? onQuantityDecrement;
 
-  const CartProductCard({Key? key, required this.cartProduct})
+  const CartProductCard({Key? key, required this.cartProduct, this.onQuantityDecrement, this.onQuantityIncrement})
       : super(key: key);
 
   @override
@@ -47,42 +50,48 @@ class CartProductCard extends StatelessWidget {
               Text(
                 cartProduct.product.name,
                 style: Theme.of(context).textTheme.headline5,
+                maxLines: 2,
               ),
-              Text(
-                "\$${cartProduct.product.price.toStringAsFixed(2)}",
-                style: Theme.of(context).textTheme.headline6,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    cartProduct.product.price.toStringMoneyFormat(),
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.remove_circle),
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          context.read<CartBloc>().add(
+                              CartProductUpdateQuantity(
+                                  cartProduct, cartProduct.quantity - 1));
+                        },
+                      ),
+                      Text(
+                        cartProduct.quantity.toStringFormatted(),
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add_circle),
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          context.read<CartBloc>().add(
+                              CartProductUpdateQuantity(
+                                  cartProduct, cartProduct.quantity + 1));
+                        },
+                      ),
+                    ],
+                  )
+                ],
               ),
             ],
           )),
           SizedBox(
             width: 12,
           ),
-          BlocBuilder<CartBloc, CartState>(
-            builder: (context, state) {
-              return Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.remove_circle),
-                    color: Theme.of(context).accentColor,
-                    onPressed: () {
-                      context.read<CartBloc>().add(CartProductUpdateQuantity(cartProduct, cartProduct.quantity - 1));
-                    },
-                  ),
-                  Text(
-                    "${cartProduct.quantity}",
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.add_circle),
-                    color: Theme.of(context).accentColor,
-                    onPressed: () {
-                      context.read<CartBloc>().add(CartProductUpdateQuantity(cartProduct, cartProduct.quantity + 1));
-                    },
-                  ),
-                ],
-              );
-            },
-          )
         ],
       ),
     );
