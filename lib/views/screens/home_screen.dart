@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_car/dummy/data_dummy.dart';
+import 'package:shopping_car/views/screens/cart_screen.dart';
 import 'package:shopping_car/views/screens/products_by_category_screen.dart';
 import 'package:shopping_car/views/widgets/category_card.dart';
 import 'package:shopping_car/views/widgets/product_card.dart';
@@ -15,13 +16,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Shopping Car"),
+        title: Text("Shopping Cart"),
       ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: CarouselSlider(
-              items: CategoryDummy.categories
+              items: DataDummy.categories
                   .map((e) => InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, ProductsByCategoryScreen.routeName, arguments: e);
@@ -43,15 +44,23 @@ class HomeScreen extends StatelessWidget {
           SliverGrid(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return ProductCard(product: CategoryDummy.products[index]);
+                return ProductCard(product: DataDummy.products[index]);
               },
-              childCount: CategoryDummy.products.length,
+              childCount: DataDummy.products.length,
             ),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, childAspectRatio: 1.0),
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        heroTag: "MyCart",
+        onPressed: () => {
+          Navigator.pushNamed(context, CartScreen.routeName)
+        }, 
+        label: Text("My Cart"),
+        icon: Icon(Icons.shopping_cart_outlined),
+        backgroundColor: Theme.of(context).colorScheme.primary,),
     );
   }
 }

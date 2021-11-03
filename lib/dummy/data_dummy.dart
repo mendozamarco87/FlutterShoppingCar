@@ -1,7 +1,7 @@
 import 'package:shopping_car/models/category_model.dart';
 import 'package:shopping_car/models/product_model.dart';
 
-class CategoryDummy {
+class DataDummy {
   static List<Category> categories = [
     Category(id: "1", name: "Electricidad", imageUrl: "https://www.plcmadrid.es/wp-content/uploads/2017/02/velocidad-electricidad-cable.jpg"),
     Category(id: "2", name: "Plomeria", imageUrl: "https://cdn.forbes.com.mx/2020/06/plomeria-e1593467669275-640x360.jpg")

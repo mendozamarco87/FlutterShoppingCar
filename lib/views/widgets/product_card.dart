@@ -55,21 +55,20 @@ class ProductCard extends StatelessWidget {
                     ),
                     Text(
                       product.price,
-                      style: Theme.of(context).textTheme.headline5!.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                      style: Theme.of(context).textTheme.headline6!.copyWith(color: Theme.of(context).colorScheme.onPrimary),
                     )
                   ],
                 ),
               ),
             ),
             Positioned(
-              top: 5,
+              bottom: 5,
               right: 5,
-              child: FloatingActionButton(
+              child: IconButton(
+                icon: Icon(Icons.add_circle, size: 36, color: Theme.of(context).colorScheme.secondary,),
                 onPressed: (){
                   
-                },
-                child: Icon(Icons.add),
-                mini: true,),)
+                },),)
           ],
         ),
       ),

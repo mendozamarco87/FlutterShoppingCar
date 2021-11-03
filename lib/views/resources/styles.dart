@@ -17,7 +17,7 @@ class Styles {
       TextStyle(fontSize: 24, color: Colorss.text);
 
   static TextStyle get textHeadline5 =>
-      TextStyle(fontSize: 22, color: Colorss.text);
+      TextStyle(fontSize: 22, color: Colorss.text, fontWeight: FontWeight.bold);
 
   static TextStyle get textHeadline6 =>
       TextStyle(fontSize: 20, color: Colorss.text);

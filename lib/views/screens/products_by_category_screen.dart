@@ -13,7 +13,7 @@ class ProductsByCategoryScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final _productListByCategory = CategoryDummy.products.where((e) => e.categoryId == category.id).toList();
+    final _productListByCategory = DataDummy.products.where((e) => e.categoryId == category.id).toList();
 
     return Scaffold(
       appBar: AppBar(title: Text(category.name),),
