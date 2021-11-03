@@ -45,7 +45,16 @@ class Themes {
       inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)))),
-      cardTheme: appCardTheme);
+      cardTheme: appCardTheme,
+      textTheme: TextTheme(
+        headline6: Styles.textHeadline6,
+        headline5: Styles.textHeadline5,
+        headline4: Styles.textHeadline4,
+        headline3: Styles.textHeadline3,
+        bodyText1: Styles.textBody1,
+        bodyText2: Styles.textBody2,
+        caption: Styles.textCaption
+      ));
 
   static get appBottomNavigationBarThemeData => BottomNavigationBarThemeData(
       backgroundColor: Colorss.appColorSheme.secondary,

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "825771120317",
+    "project_id": "shopping-cart-d4953",
+    "storage_bucket": "shopping-cart-d4953.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825771120317:android:10be2c3012f5f3c116c9d4",
+        "android_client_info": {
+          "package_name": "com.mendozamarco87.shoppingcart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825771120317-ep4e6ui9ccoskeh078q4071rion53q01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD6Iykt0TZZtXnbxoRp-t_tpFV_ZT69PI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825771120317-ep4e6ui9ccoskeh078q4071rion53q01.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "825771120317-5n7lbc1icc2nngffgctcnlpvo428g3ao.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mendozamarco87.shoppingcart"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
