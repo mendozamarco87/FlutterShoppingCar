@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
+import 'package:shopping_car/blocs/cart/cart_bloc.dart';
 import 'package:shopping_car/models/product_model.dart';
 import 'package:shopping_car/views/resources/colors.dart';
+import 'package:shopping_car/views/widgets/wigets_utils.dart';
 
 import 'ShimmerPlaceholderLoading.dart';
 
@@ -51,11 +54,13 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       product.name,
-                      style: Theme.of(context).textTheme.headline5!.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                      style: Theme.of(context).textTheme.headline5!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                     Text(
-                      product.price,
-                      style: Theme.of(context).textTheme.headline6!.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                      "\$${product.price.toStringAsFixed(2)}",
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary),
                     )
                   ],
                 ),
@@ -64,11 +69,26 @@ class ProductCard extends StatelessWidget {
             Positioned(
               bottom: 5,
               right: 5,
-              child: IconButton(
-                icon: Icon(Icons.add_circle, size: 36, color: Theme.of(context).colorScheme.secondary,),
-                onPressed: (){
-                  
-                },),)
+              child: BlocBuilder<CartBloc, CartState>(
+                builder: (context, state) {
+                  if (state is CartLoaded) {
+                    return IconButton(
+                      icon: Icon(
+                        Icons.add_circle,
+                        size: 36,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                      onPressed: () {
+                        context.read<CartBloc>().add(CartProductAdded(product));
+                        WidgetUtils.showSnackbarSuccess(context, "Product added to your cart");
+                      },
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            )
           ],
         ),
       ),

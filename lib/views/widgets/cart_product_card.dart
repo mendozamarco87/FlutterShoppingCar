@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
-import 'package:shopping_car/models/product_model.dart';
+import 'package:shopping_car/blocs/cart/cart_bloc.dart';
+import 'package:shopping_car/models/cart_product_model.dart';
 
 import 'ShimmerPlaceholderLoading.dart';
 
 class CartProductCard extends StatelessWidget {
-  final Product product;
+  final CartProduct cartProduct;
 
-  const CartProductCard({Key? key, required this.product}) : super(key: key);
+  const CartProductCard({Key? key, required this.cartProduct})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class CartProductCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: OptimizedCacheImage(
-              imageUrl: product.imageUrl,
+              imageUrl: cartProduct.product.imageUrl,
               placeholder: (context, url) => ShimmerPlaceholderLoading(
                 borderRadius: 16,
                 enable: false,
@@ -42,11 +45,11 @@ class CartProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product.name,
+                cartProduct.product.name,
                 style: Theme.of(context).textTheme.headline5,
               ),
               Text(
-                "\$${product.price}",
+                "\$${cartProduct.product.price.toStringAsFixed(2)}",
                 style: Theme.of(context).textTheme.headline6,
               ),
             ],
@@ -54,23 +57,31 @@ class CartProductCard extends StatelessWidget {
           SizedBox(
             width: 12,
           ),
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.remove_circle),
-                color: Theme.of(context).accentColor,
-                onPressed: () {},
-              ),
-              Text(
-                "1",
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              IconButton(
-                icon: Icon(Icons.add_circle),
-                color: Theme.of(context).accentColor,
-                onPressed: () {},
-              ),
-            ],
+          BlocBuilder<CartBloc, CartState>(
+            builder: (context, state) {
+              return Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.remove_circle),
+                    color: Theme.of(context).accentColor,
+                    onPressed: () {
+                      context.read<CartBloc>().add(CartProductUpdateQuantity(cartProduct, cartProduct.quantity - 1));
+                    },
+                  ),
+                  Text(
+                    "${cartProduct.quantity}",
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.add_circle),
+                    color: Theme.of(context).accentColor,
+                    onPressed: () {
+                      context.read<CartBloc>().add(CartProductUpdateQuantity(cartProduct, cartProduct.quantity + 1));
+                    },
+                  ),
+                ],
+              );
+            },
           )
         ],
       ),
