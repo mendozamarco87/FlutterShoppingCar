@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'cart_model.dart';
 import 'product_model.dart';
 
@@ -26,4 +28,24 @@ class CartProduct {
       quantity: quantity ?? this.quantity,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'product': product.toMap(),
+      'cart': cart.toMap(),
+      'quantity': quantity,
+    };
+  }
+
+  factory CartProduct.fromMap(Map<String, dynamic> map) {
+    return CartProduct(
+      product: Product.fromMap(map['product']),
+      cart: Cart.fromMap(map['cart']),
+      quantity: map['quantity'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory CartProduct.fromJson(String source) => CartProduct.fromMap(json.decode(source));
 }

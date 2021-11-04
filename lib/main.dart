@@ -5,10 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shopping_car/blocs/cart/cart_bloc.dart';
 import 'package:shopping_car/blocs/category/category_bloc.dart';
+import 'package:shopping_car/blocs/order/order_bloc.dart';
 import 'package:shopping_car/blocs/product/product_bloc.dart';
 import 'package:shopping_car/config/app_router.dart';
 import 'package:shopping_car/models/cart_model.dart';
 import 'package:shopping_car/repositories/category/category_repository.dart';
+import 'package:shopping_car/repositories/order/order_repository.dart';
 import 'package:shopping_car/repositories/product/product_repository.dart';
 import 'package:shopping_car/views/resources/themes.dart';
 
@@ -35,8 +37,17 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (_) => CategoryBloc(
                 categoryRespository:
-                    CategoryRespository(firebaseFirestore: firebaseFirestore))..add(LoadCategories())),
-        BlocProvider(create: (_) => ProductBloc(productRespository: ProductRespository(firebaseFirestore: firebaseFirestore))..add(LoadProducts()))
+                    CategoryRespository(firebaseFirestore: firebaseFirestore))
+                  ..add(LoadCategories())),
+        BlocProvider(
+            create: (_) => ProductBloc(
+                productRespository: 
+                    ProductRespository(firebaseFirestore: firebaseFirestore))
+                  ..add(LoadProducts())),
+        BlocProvider(
+            create: (context) => OrderBloc(
+                orderRepository: OrderRepository(firebaseFirestore: firebaseFirestore), 
+                cartBloc: context.read<CartBloc>()))
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

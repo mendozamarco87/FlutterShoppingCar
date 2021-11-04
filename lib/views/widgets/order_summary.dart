@@ -26,11 +26,11 @@ class OrderSummary extends StatelessWidget {
             children: [
               Text(
                 "Subtotal:",
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headline6,
               ),
               Text(
                 total.toStringMoneyFormat(),
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headline6,
               )
             ],
           ),
@@ -39,11 +39,11 @@ class OrderSummary extends StatelessWidget {
             children: [
               Text(
                 "Descuento:",
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headline6,
               ),
               Text(
                 discount.toStringMoneyFormat(),
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headline6,
               )
             ],
           ),
