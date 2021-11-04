@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_car/blocs/category/category_bloc.dart';
 import 'package:shopping_car/blocs/product/product_bloc.dart';
 import 'package:shopping_car/views/screens/cart_screen.dart';
+import 'package:shopping_car/views/screens/orders_screen.dart';
 import 'package:shopping_car/views/screens/products_by_category_screen.dart';
 import 'package:shopping_car/views/widgets/category_card.dart';
 import 'package:shopping_car/views/widgets/product_card.dart';
@@ -18,6 +19,13 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tienda Digital"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.list),
+            onPressed: () {
+              Navigator.pushNamed(context, OrdersScreen.routeName);
+            },)
+        ],
       ),
       body: CustomScrollView(
         slivers: [

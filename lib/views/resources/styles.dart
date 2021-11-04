@@ -23,10 +23,10 @@ class Styles {
       TextStyle(fontSize: 20, color: Colorss.text);
 
   static TextStyle get textBody1 =>
-      TextStyle(fontSize: 18, color: Colorss.text);
+      TextStyle(fontSize: 18, color: Colorss.text, fontWeight: FontWeight.bold);
 
   static TextStyle get textBody2 =>
-      TextStyle(fontSize: 17, color: Colorss.text);
+      TextStyle(fontSize: 18, color: Colorss.text);
 
   static TextStyle get textCaption =>
       TextStyle(fontSize: 14, color: Colorss.textLight);

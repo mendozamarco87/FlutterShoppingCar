@@ -31,3 +31,10 @@ extension DoubleExtensions on double {
     return NumberFormat("0.##").format(this);
   }
 }
+
+extension DateTimeExtensions on DateTime {
+
+  String toStringFormatLat() {
+    return DateFormat("dd/MM/yyyy HH:mm").format(this);
+  }
+}

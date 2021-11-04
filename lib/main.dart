@@ -6,6 +6,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shopping_car/blocs/cart/cart_bloc.dart';
 import 'package:shopping_car/blocs/category/category_bloc.dart';
 import 'package:shopping_car/blocs/order/order_bloc.dart';
+import 'package:shopping_car/blocs/orders/orders_bloc.dart';
 import 'package:shopping_car/blocs/product/product_bloc.dart';
 import 'package:shopping_car/config/app_router.dart';
 import 'package:shopping_car/models/cart_model.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (_) => CartBloc()
               ..add(CartStarted(
-                  Cart(id: UniqueKey().toString(), status: "New")))),
+                  Cart(id: UniqueKey().toString(), status: "Pendiente")))),
         BlocProvider(
             create: (_) => CategoryBloc(
                 categoryRespository:
@@ -47,7 +48,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => OrderBloc(
                 orderRepository: OrderRepository(firebaseFirestore: firebaseFirestore), 
-                cartBloc: context.read<CartBloc>()))
+                cartBloc: context.read<CartBloc>())),
+        BlocProvider(create: (_) => OrdersBloc(
+                orderRepository: OrderRepository(firebaseFirestore: firebaseFirestore))
+                ..add(LoadOrders()))
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

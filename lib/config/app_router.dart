@@ -4,6 +4,7 @@ import 'package:shopping_car/views/screens/cart_screen.dart';
 import 'package:shopping_car/views/screens/error_screen.dart';
 import 'package:shopping_car/views/screens/home_screen.dart';
 import 'package:shopping_car/views/screens/order_screen.dart';
+import 'package:shopping_car/views/screens/orders_screen.dart';
 import 'package:shopping_car/views/screens/products_by_category_screen.dart';
 
 class AppRouter {
@@ -18,6 +19,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => CartScreen());
       case OrderScreen.routeName:
         return MaterialPageRoute(builder: (_) => OrderScreen());
+      case OrdersScreen.routeName:
+        return MaterialPageRoute(builder: (_) => OrdersScreen());
       default:
         return MaterialPageRoute(builder: (_) => ErrorScreen());
     }

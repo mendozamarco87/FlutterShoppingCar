@@ -5,6 +5,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:shopping_car/blocs/cart/cart_bloc.dart';
 import 'package:shopping_car/blocs/order/order_bloc.dart';
 import 'package:shopping_car/models/order_model.dart';
+import 'package:shopping_car/views/screens/orders_screen.dart';
 import 'package:shopping_car/views/widgets/order_summary.dart';
 
 class OrderScreen extends HookWidget {
@@ -153,7 +154,8 @@ class OrderScreen extends HookWidget {
                       subtotal: state.cart.subtotal, 
                       discount: state.cart.discount, 
                       total: state.cart.total, 
-                      status: state.cart.status, 
+                      status: state.cart.status,
+                      date: DateTime.now(), 
                       detail: state.cart.products);
 
                     context.read<OrderBloc>().add(SaveOrder(order: order));
@@ -167,7 +169,9 @@ class OrderScreen extends HookWidget {
                         .textTheme
                         .headline5!
                         .copyWith(color: Theme.of(context).primaryColor),), 
-                  onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),);
+                  onPressed: () { 
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                    Navigator.pushNamed(context, OrdersScreen.routeName);},);
               } else {
                 return Container();
               }

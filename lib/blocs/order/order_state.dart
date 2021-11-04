@@ -41,6 +41,7 @@ class OrderLoaded extends OrderState {
             discount: discount,
             total: total,
             status: cart.status,
+            date: DateTime.now(),
             detail: cart.products);
 
   @override

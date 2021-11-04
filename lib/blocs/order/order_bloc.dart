@@ -89,7 +89,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         await _orderRepository.saveOrder(event.order);
         emit(OrderSaved(order: event.order));
 
-        final newCart = Cart(id: UniqueKey().toString(), status: "New");
+        final newCart = Cart(id: UniqueKey().toString(), status: "Pendiente");
         _cartBloc.add(CartStarted(newCart));
 
       } catch (_) {
