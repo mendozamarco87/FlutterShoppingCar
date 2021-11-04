@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
           SliverToBoxAdapter(child: BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, state) {
               if (state is CategoryLoading) {
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
               } else if (state is CategoryLoaded) {
                 return _buildCategories(context, state);
               } else {

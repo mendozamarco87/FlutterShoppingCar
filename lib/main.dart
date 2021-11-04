@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopping_car/blocs/cart/cart_bloc.dart';
 import 'package:shopping_car/blocs/category/category_bloc.dart';
 import 'package:shopping_car/blocs/order/order_bloc.dart';
@@ -20,20 +21,30 @@ import 'views/screens/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  final pref = await SharedPreferences.getInstance();
 
-  runApp(MyApp());
+  runApp(MyApp(sharedPreferences: pref));
 }
 
 class MyApp extends StatelessWidget {
+
+  final SharedPreferences _sharedPreferences;
+
+  const MyApp({Key? key, required SharedPreferences sharedPreferences})
+   : _sharedPreferences = sharedPreferences, super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final firebaseFirestore = FirebaseFirestore.instance;
+    final cartJson = _sharedPreferences.getString(CartBloc.cartPrefKey);
 
+    print("build app");
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (_) => CartBloc()
+            create: (_) => CartBloc(_sharedPreferences)
               ..add(CartStarted(
+                  cartJson != null? Cart.fromJson(cartJson) :
                   Cart(id: UniqueKey().toString(), status: "Pendiente")))),
         BlocProvider(
             create: (_) => CategoryBloc(
