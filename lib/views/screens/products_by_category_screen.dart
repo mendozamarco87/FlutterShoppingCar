@@ -4,6 +4,9 @@ import 'package:shopping_car/blocs/product/product_bloc.dart';
 import 'package:shopping_car/models/category_model.dart';
 import 'package:shopping_car/views/widgets/product_card.dart';
 
+import 'cart_screen.dart';
+import 'product_screen.dart';
+
 class ProductsByCategoryScreen extends StatelessWidget {
   static const routeName = "/ProductsByCategory";
   final Category category;
@@ -28,17 +31,29 @@ class ProductsByCategoryScreen extends StatelessWidget {
           } else if (state is ProductLoaded) {
             final _productListByCategory =
               state.products.where((e) => e.categoryId == category.id).toList();
+
             return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, childAspectRatio: 1.0),
                 itemCount: _productListByCategory.length,
                 itemBuilder: (context, index) {
-                  return ProductCard(product: _productListByCategory[index]);
+                  return InkWell(
+                    child: ProductCard(product: _productListByCategory[index]),
+                    onTap: () {
+                      Navigator.pushNamed(context, ProductScreen.routeName, arguments: _productListByCategory[index]);
+                    },);
                 });
           } else {
             return Container();
           }
         },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        heroTag: "MiCarrito",
+        onPressed: () => Navigator.pushNamed(context, CartScreen.routeName),
+        label: Text("Mi Carrito"),
+        icon: Icon(Icons.shopping_cart_outlined),
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

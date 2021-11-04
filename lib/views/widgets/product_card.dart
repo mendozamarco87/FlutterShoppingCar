@@ -32,8 +32,8 @@ class ProductCard extends StatelessWidget {
                   enable: false,
                 ),
                 fit: BoxFit.cover,
-                height: 1000.0,
-                width: 1000.0,
+                height: 500.0,
+                width: 500.0,
                 errorWidget: (context, s, d) => Icon(
                   Icons.broken_image_outlined,
                   size: 50,

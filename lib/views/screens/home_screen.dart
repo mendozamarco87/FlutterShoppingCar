@@ -4,6 +4,7 @@ import 'package:shopping_car/blocs/category/category_bloc.dart';
 import 'package:shopping_car/blocs/product/product_bloc.dart';
 import 'package:shopping_car/views/screens/cart_screen.dart';
 import 'package:shopping_car/views/screens/orders_screen.dart';
+import 'package:shopping_car/views/screens/product_screen.dart';
 import 'package:shopping_car/views/screens/products_by_category_screen.dart';
 import 'package:shopping_car/views/widgets/category_card.dart';
 import 'package:shopping_car/views/widgets/product_card.dart';
@@ -56,7 +57,7 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         heroTag: "MiCarrito",
-        onPressed: () => {Navigator.pushNamed(context, CartScreen.routeName)},
+        onPressed: () => Navigator.pushNamed(context, CartScreen.routeName),
         label: Text("Mi Carrito"),
         icon: Icon(Icons.shopping_cart_outlined),
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -68,7 +69,11 @@ class HomeScreen extends StatelessWidget {
     return SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return ProductCard(product: state.products[index]);
+                    return InkWell(
+                      child: ProductCard(product: state.products[index]),
+                      onTap: () {
+                        Navigator.pushNamed(context, ProductScreen.routeName, arguments: state.products[index]);
+                      },);
                   },
                   childCount: state.products.length,
                 ),
