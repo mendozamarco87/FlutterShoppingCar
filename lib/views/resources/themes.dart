@@ -20,15 +20,7 @@ class Themes {
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)))),
       cardTheme: appCardTheme,
-      textTheme: TextTheme(
-        headline6: Styles.textHeadline6,
-        headline5: Styles.textHeadline5,
-        headline4: Styles.textHeadline4,
-        headline3: Styles.textHeadline3,
-        bodyText1: Styles.textBody1,
-        bodyText2: Styles.textBody2,
-        caption: Styles.textCaption
-      ));
+      textTheme: appTextTheme);
 
   static get appDarkTheme => ThemeData(
       fontFamily: 'GoogleSans',
@@ -46,15 +38,7 @@ class Themes {
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)))),
       cardTheme: appCardTheme,
-      textTheme: TextTheme(
-        headline6: Styles.textHeadline6,
-        headline5: Styles.textHeadline5,
-        headline4: Styles.textHeadline4,
-        headline3: Styles.textHeadline3,
-        bodyText1: Styles.textBody1,
-        bodyText2: Styles.textBody2,
-        caption: Styles.textCaption
-      ));
+      textTheme: appTextTheme);
 
   static get appBottomNavigationBarThemeData => BottomNavigationBarThemeData(
       backgroundColor: Colorss.appColorSheme.secondary,
@@ -72,4 +56,14 @@ class Themes {
   static get appCardTheme => CardTheme(
     elevation: 1.5
   );
+
+  static get appTextTheme => TextTheme(
+        headline6: Styles.textHeadline6,
+        headline5: Styles.textHeadline5,
+        headline4: Styles.textHeadline4,
+        headline3: Styles.textHeadline3,
+        bodyText1: Styles.textBody1,
+        bodyText2: Styles.textBody2,
+        caption: Styles.textCaption
+      );
 }

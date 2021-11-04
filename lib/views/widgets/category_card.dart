@@ -19,8 +19,9 @@ class CategoryCard extends StatelessWidget {
           height: 100.0,
           width: 100.0,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Theme.of(context).colorScheme.surface,
             shape: BoxShape.circle,
+            border: Border.all(color: Theme.of(context).dividerColor)
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(16.0)),

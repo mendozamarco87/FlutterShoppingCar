@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
-import 'package:shopping_car/blocs/cart/cart_bloc.dart';
 import 'package:shopping_car/models/cart_product_model.dart';
 import 'package:shopping_car/tools/extensions.dart';
 
@@ -65,9 +63,9 @@ class CartProductCard extends StatelessWidget {
                         icon: Icon(Icons.remove_circle),
                         color: Theme.of(context).accentColor,
                         onPressed: () {
-                          context.read<CartBloc>().add(
-                              CartProductUpdateQuantity(
-                                  cartProduct, cartProduct.quantity - 1));
+                          if (onQuantityDecrement != null) {
+                            onQuantityDecrement!(cartProduct);
+                          }
                         },
                       ),
                       Text(
@@ -78,9 +76,9 @@ class CartProductCard extends StatelessWidget {
                         icon: Icon(Icons.add_circle),
                         color: Theme.of(context).accentColor,
                         onPressed: () {
-                          context.read<CartBloc>().add(
-                              CartProductUpdateQuantity(
-                                  cartProduct, cartProduct.quantity + 1));
+                          if (onQuantityIncrement != null) {
+                            onQuantityIncrement!(cartProduct);
+                          }
                         },
                       ),
                     ],

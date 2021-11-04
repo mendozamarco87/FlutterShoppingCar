@@ -15,14 +15,12 @@ class Colorss {
   static const Color text = Color(0xBB000000);
   static const Color textLight = Color(0xFF616161);
   static const Color favorite = Color(0xffffd600);
-  static const Color onSurface = const Color(0xfff4f4f4);
 
   static ColorScheme get appColorSheme => ColorScheme.light(
       primary: const Color(0xffea0029),
       secondary: accent,
       onSecondary: Colors.white,
       error: error,
-      onSurface: onSurface,
       brightness: Brightness.light);
 
   static ColorScheme get appDarkColorSheme => ColorScheme.light(
